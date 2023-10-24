@@ -7,9 +7,7 @@ class Point:
 
 class Rectangle:
     def __init__(self, width, height, bottomLeftCornerX, bottomLeftCornerY):
-        if width == 0 | height == 0:
-            print("There is no rectangle with zero width of height")
-        elif width < 0:
+        if width < 0:
             self.bottomLeftCornerX = bottomLeftCornerX + width
             self.width = abs(width)
         elif height < 0:
@@ -38,25 +36,22 @@ class Rectangle:
         y1 = max(self.bottomLeftCornerY, other_rect.bottomLeftCornerY)
         x2 = min(self.bottomLeftCornerX+self.width, other_rect.bottomLeftCornerX+other_rect.width)
         y2 = min(self.bottomLeftCornerX+self.height, other_rect.bottomLeftCornerX+other_rect.height)
-
         # Check if there is an overlap
         if x1 < x2 and y1 < y2:
             width = x2 - x1
             height = y2 - y1
-            return Rectangle(width, height, x1, y1)
         else:
-            return None
+            width = 0
+            height = 0
+        return Rectangle(width, height, x1, y1)
 
 # Example usage
-rect1 = Rectangle(4, 5, 4, 5)
+rect1 = Rectangle(4, 5, 1, 2)
 rect2 = Rectangle(3, 4, 0, 0)
 
 print("Surface Area of rect1:", rect1.surface_area())
 print("Circumference of rect1:", rect1.circumference())
 print("Bottom Right Corner of rect1: x=", rect1.get_bottom_right_corner().x, "y=", rect1.get_bottom_right_corner().y)
 
-overlapping = rect1.overlapping_area(rect2)
-if overlapping:
-    print("Overlapping Rectangle Area:", overlapping.surface_area())
-else:
-    print("No overlapping area between rect1 and rect2.")
+print("Overlapping Rectangle Area:", rect1.overlapping_area(rect2).surface_area())
+
